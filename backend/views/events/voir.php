@@ -1,45 +1,35 @@
 <?php
-<<<<<<< HEAD
 // Details du budget d'un evenement
 require_once '../../config/database.php';
 require_once '../../config/session.php';
 require_once '../../config/helpers.php';
 require_once '../../models/Budget.php';
-=======
 // Details d'un evenement
 require_once '../../config/database.php';
 require_once '../../config/session.php';
 require_once '../../config/helpers.php';
 require_once '../../models/Event.php';
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 
 requireLogin();
 
 $user = getCurrentUser();
 
-<<<<<<< HEAD
 $event_id = $_GET['event_id'] ?? null;
-=======
 $event_id = $_GET['id'] ?? null;
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 
 if (!$event_id) {
     redirect('liste.php');
 }
 
-<<<<<<< HEAD
 // Recupere l'evenement
 $event = fetchOne("SELECT * FROM events WHERE id = ?", [$event_id]);
-=======
 $eventModel = new Event($pdo);
 $event = $eventModel->getById($event_id);
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 
 if (!$event) {
     redirect('liste.php');
 }
 
-<<<<<<< HEAD
 $budgetModel = new Budget($pdo);
 $budget = $budgetModel->getByEventId($event_id);
 
@@ -54,7 +44,6 @@ $total_reel = $budgetModel->getTotalReel($budget['id']);
 // Calcul l'ecart
 $ecart = $total_reel - $total_prevu;
 $pourcentage = $total_prevu > 0 ? ($total_reel / $total_prevu) * 100 : 0;
-=======
 // Recupere les infos liées a l'evenement
 $budget = fetchOne("SELECT * FROM budgets WHERE event_id = $1", [$event_id]);
 $personnel = fetchAll("SELECT p.*, ep.role_event FROM personnel p 
@@ -67,7 +56,6 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
                    LEFT JOIN users u ON t.assigne_a = u.id 
                    WHERE t.event_id = $1 AND t.parent_task_id IS NULL 
                    ORDER BY t.priorite DESC, t.date_limite", [$event_id]);
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 ?>
 
 <!DOCTYPE html>
@@ -75,13 +63,10 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Budget - <?php echo $event['nom']; ?></title>
     <link rel="stylesheet" href="../../../public/css/style.css">
-=======
     <title>Détails - <?php echo $event['nom']; ?></title>
     <link rel="stylesheet" href="/public/css/style.css">
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 </head>
 <body>
     <div class="container">
@@ -90,13 +75,10 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
             <h2>Gestion Events</h2>
             <ul>
                 <li><a href="../dashboard.php">Dashboard</a></li>
-<<<<<<< HEAD
                 <li><a href="../events/liste.php">Événements</a></li>
                 <li><a href="liste.php" class="active">Budget</a></li>
-=======
                 <li><a href="liste.php" class="active">Événements</a></li>
                 <li><a href="../budget/liste.php">Budget</a></li>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                 <li><a href="../personnel/liste.php">Personnel</a></li>
                 <li><a href="../prestataires/liste.php">Prestataires</a></li>
                 <li><a href="../tasks/liste.php">Tâches</a></li>
@@ -111,20 +93,16 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
         <!-- Contenu -->
         <main class="main-content">
             <div class="page-header">
-<<<<<<< HEAD
                 <h1>Budget : <?php echo $event['nom']; ?></h1>
                 <div>
                     <a href="modifier.php?event_id=<?php echo $event_id; ?>" class="btn-primary">Modifier</a>
-=======
                 <h1><?php echo $event['nom']; ?></h1>
                 <div>
                     <a href="modifier.php?id=<?php echo $event['id']; ?>" class="btn-primary">Modifier</a>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                     <a href="liste.php" class="btn-secondary">← Retour</a>
                 </div>
             </div>
             
-<<<<<<< HEAD
             <!-- Resume du budget -->
             <div class="budget-summary">
                 <div class="budget-card">
@@ -196,7 +174,6 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-=======
             <!-- Informations principales -->
             <div class="section">
                 <h2>Informations générales</h2>
@@ -297,7 +274,6 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
                     </ul>
                 <?php else: ?>
                     <p>Aucune tâche</p>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                 <?php endif; ?>
             </div>
         </main>

@@ -1,17 +1,14 @@
 <?php
-<<<<<<< HEAD
 // Formulaire de modification de personnel
 require_once '../../config/database.php';
 require_once '../../config/session.php';
 require_once '../../config/helpers.php';
 require_once '../../controllers/PersonnelController.php';
-=======
 // Formulaire de modification d'evenement
 require_once '../../config/database.php';
 require_once '../../config/session.php';
 require_once '../../config/helpers.php';
 require_once '../../controllers/EventController.php';
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 
 requireLogin();
 
@@ -19,7 +16,6 @@ $user = getCurrentUser();
 $message = '';
 $error = '';
 
-<<<<<<< HEAD
 $personnel_id = $_GET['id'] ?? null;
 
 if (!$personnel_id) {
@@ -33,7 +29,6 @@ if (!$personnel) {
     redirect('liste.php');
 }
 
-=======
 // Recupere l'ID de l'evenement
 $event_id = $_GET['id'] ?? null;
 
@@ -51,12 +46,10 @@ if (!$event) {
 // Liste des utilisateurs
 $users = fetchAll("SELECT id, nom, role FROM users WHERE role IN ('administrateur', 'chef_projet')");
 
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'nom' => clean($_POST['nom']),
-<<<<<<< HEAD
         'prenom' => clean($_POST['prenom']),
         'email' => clean($_POST['email']),
         'telephone' => clean($_POST['telephone']),
@@ -68,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result['success']) {
         $message = $result['message'];
         $personnel = $controller->show($personnel_id);
-=======
         'type_event' => clean($_POST['type_event']),
         'date_debut' => $_POST['date_debut'],
         'date_fin' => $_POST['date_fin'] ?? null,
@@ -84,7 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = $result['message'];
         // Recharge l'evenement mis a jour
         $event = $controller->show($event_id);
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
     } else {
         $error = $result['message'];
     }
@@ -96,13 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Modifier le membre</title>
     <link rel="stylesheet" href="../../../public/css/style.css">
-=======
     <title>Modifier l'événement</title>
     <link rel="stylesheet" href="/public/css/style.css">
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 </head>
 <body>
     <div class="container">
@@ -111,15 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Gestion Events</h2>
             <ul>
                 <li><a href="../dashboard.php">Dashboard</a></li>
-<<<<<<< HEAD
                 <li><a href="../events/liste.php">Événements</a></li>
                 <li><a href="../budget/liste.php">Budget</a></li>
                 <li><a href="liste.php" class="active">Personnel</a></li>
-=======
                 <li><a href="liste.php" class="active">Événements</a></li>
                 <li><a href="../budget/liste.php">Budget</a></li>
                 <li><a href="../personnel/liste.php">Personnel</a></li>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                 <li><a href="../prestataires/liste.php">Prestataires</a></li>
                 <li><a href="../tasks/liste.php">Tâches</a></li>
             </ul>
@@ -133,11 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Contenu -->
         <main class="main-content">
             <div class="page-header">
-<<<<<<< HEAD
                 <h1>Modifier : <?php echo $personnel['prenom'] . ' ' . $personnel['nom']; ?></h1>
-=======
                 <h1>Modifier : <?php echo $event['nom']; ?></h1>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                 <a href="liste.php" class="btn-secondary">← Retour</a>
             </div>
             
@@ -153,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="POST" action="" class="form-event">
                     <div class="form-row">
                         <div class="form-group">
-<<<<<<< HEAD
                             <label>Nom *</label>
                             <input type="text" name="nom" value="<?php echo $personnel['nom']; ?>" required>
                         </div>
@@ -161,7 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label>Prénom *</label>
                             <input type="text" name="prenom" value="<?php echo $personnel['prenom']; ?>" required>
-=======
                             <label>Nom de l'événement *</label>
                             <input type="text" name="nom" value="<?php echo $event['nom']; ?>" required>
                         </div>
@@ -178,13 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="Formation" <?php echo $event['type_event'] == 'Formation' ? 'selected' : ''; ?>>Formation</option>
                                 <option value="Autre" <?php echo $event['type_event'] == 'Autre' ? 'selected' : ''; ?>>Autre</option>
                             </select>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-<<<<<<< HEAD
                             <label>Email</label>
                             <input type="email" name="email" value="<?php echo $personnel['email']; ?>">
                         </div>
@@ -192,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label>Téléphone</label>
                             <input type="text" name="telephone" value="<?php echo $personnel['telephone']; ?>">
-=======
                             <label>Date de début *</label>
                             <input type="date" name="date_debut" value="<?php echo $event['date_debut']; ?>" required>
                         </div>
@@ -200,15 +177,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label>Date de fin</label>
                             <input type="date" name="date_fin" value="<?php echo $event['date_fin']; ?>">
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                         </div>
                     </div>
                     
                     <div class="form-group">
-<<<<<<< HEAD
                         <label>Poste</label>
                         <input type="text" name="poste" value="<?php echo $personnel['poste']; ?>">
-=======
                         <label>Lieu</label>
                         <input type="text" name="lieu" value="<?php echo $event['lieu']; ?>">
                     </div>
@@ -237,7 +211,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="termine" <?php echo $event['statut'] == 'termine' ? 'selected' : ''; ?>>Terminé</option>
                             </select>
                         </div>
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
                     </div>
                     
                     <div class="form-actions">

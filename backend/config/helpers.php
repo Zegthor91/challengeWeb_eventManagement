@@ -1,9 +1,6 @@
 <?php
 // Fonctions utiles pour tout le projet
-<<<<<<< HEAD
 
-=======
->>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 // Redirige vers une page
 function redirect($path) {
     header("Location: $path");
