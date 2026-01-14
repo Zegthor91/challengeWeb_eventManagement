@@ -51,9 +51,13 @@ body {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 .form-group input,
 .form-group select,
 .form-group textarea {
+=======
+.form-group input {
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -84,6 +88,7 @@ body {
     margin-bottom: 20px;
 }
 
+<<<<<<< HEAD
 .success-message {
     background: #2ecc71;
     color: white;
@@ -92,6 +97,8 @@ body {
     margin-bottom: 20px;
 }
 
+=======
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 .test-accounts {
     margin-top: 20px;
     padding: 15px;
@@ -261,6 +268,7 @@ body {
 .badge-termine {
     background: #55efc4;
     color: #00b894;
+<<<<<<< HEAD
 }
 
 .badge-a_faire {
@@ -495,4 +503,6 @@ body {
 .text-danger {
     color: #e74c3c;
     font-weight: bold;
+=======
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 }

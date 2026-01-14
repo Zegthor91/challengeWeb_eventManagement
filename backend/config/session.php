@@ -1,6 +1,9 @@
 <?php
 // Gestion des sessions
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
 // Demarre la session si elle n'est pas deja demarré
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -35,7 +38,11 @@ function login($user) {
 // Deconnecte l'utilisateur
 function logout() {
     session_destroy();
+<<<<<<< HEAD
     header('Location: /views/login.php');
+=======
+    header('Location: /backend/views/login.php');
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
     exit();
 }
 
@@ -50,7 +57,11 @@ function hasRole($role) {
 // Redirige si pas connecté
 function requireLogin() {
     if (!isLoggedIn()) {
+<<<<<<< HEAD
         header('Location: /views/login.php');
+=======
+        header('Location: /backend/views/login.php');
+>>>>>>> 1b402c43edf8776eb44ed747824a00ed1ca1350d
         exit();
     }
 }
