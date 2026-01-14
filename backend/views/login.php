@@ -10,12 +10,6 @@ $debug = '';
 // Si l'utilisateur est deja connecté, redirige vers le dashboard
 if (isLoggedIn()) {
     redirect('/views/dashboard.php');
-
-$error = '';
-
-// Si l'utilisateur est deja connecté, redirige vers le dashboard
-if (isLoggedIn()) {
-    redirect('/backend/views/dashboard.php');
 }
 
 // Traitement du formulaire de connexion
@@ -47,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Test 2 : Avec fetchOne et $1
     try {
-        $user = fetchOne("SELECT * FROM users WHERE email = $1", [$email]);
+        $user = fetchOne("SELECT * FROM users WHERE email = ?", [$email]);
         
         if ($user) {
-            $debug .= "TEST 2 (fetchOne avec \$1) : ✅ User trouvé !<br>";
+            $debug .= "TEST 2 (fetchOne avec ?) : ✅ User trouvé !<br>";
             $debug .= "   - Nom : " . $user['nom'] . "<br>";
             $debug .= "   - Password hash : " . substr($user['password'], 0, 20) . "...<br><br>";
         } else {
-            $debug .= "TEST 2 (fetchOne avec \$1) : ❌ Aucun user<br><br>";
+            $debug .= "TEST 2 (fetchOne avec ?) : ❌ Aucun user<br><br>";
         }
     } catch (Exception $e) {
         $debug .= "TEST 2 ERREUR : " . $e->getMessage() . "<br><br>";
@@ -82,13 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         login($user);
         redirect('/views/dashboard.php');
-    // Recupere l'utilisateur par email
-    $user = fetchOne("SELECT * FROM users WHERE email = $1", [$email]);
-    
-    if ($user && password_verify($password, $user['password'])) {
-        // Connexion reussi
-        login($user);
-        redirect('/backend/views/dashboard.php');
     } else {
         $error = "Email ou mot de passe incorrect";
     }
@@ -102,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Gestion Événements</title>
     <link rel="stylesheet" href="../../public/css/style.css">
-    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
     <div class="login-container">
@@ -124,13 +110,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" name="email" value="adminok@test.com">
-                    <input type="email" name="email" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <input type="password" name="password" value="Okay94">
-                    <input type="password" name="password" required>
                 </div>
                 
                 <button type="submit" class="btn-primary">Se connecter</button>
@@ -140,9 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Comptes de test :</p>
                 <ul>
                     <li>adminok@test.com / Okay94</li>
-                    <li>admin@test.com / admin123</li>
-                    <li>jean@test.com / jean123</li>
-                    <li>marie@test.com / marie123</li>
                 </ul>
             </div>
         </div>
