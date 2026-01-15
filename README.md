@@ -19,12 +19,17 @@ cd challengeWeb_eventManagement
 ```
 
 2. BDD
-```bash
-psql -U postgres
-CREATE DATABASE gestion_events;
-\q
-psql -U postgres -d gestion_events -f database.sql
+
+Ouvrir pgAdmin ou utiliser PowerShell:
+```powershell
+# Créer la BDD
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -c "CREATE DATABASE gestion_events;"
+
+# Importer le schéma
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -d gestion_events -f database.sql
 ```
+
+Ou via pgAdmin: clic droit sur Databases > Create > Database > `gestion_events`, puis Query Tool et coller le contenu de `database.sql`
 
 3. Config
 
