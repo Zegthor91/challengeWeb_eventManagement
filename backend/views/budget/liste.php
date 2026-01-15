@@ -90,3 +90,4 @@ $events = fetchAll($sql);
     </div>
 </body>
 </html>
+

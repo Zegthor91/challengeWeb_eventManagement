@@ -153,3 +153,4 @@ $pourcentage = $total_prevu > 0 ? ($total_reel / $total_prevu) * 100 : 0;
     </div>
 </body>
 </html>
+

@@ -42,7 +42,7 @@ $tasks = fetchAll("SELECT t.*, u.nom as assigne_nom FROM tasks t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails - <?php echo $event['nom']; ?></title>
-    <link rel="stylesheet" href="../../../public/css/style.css">
+    <link rel="stylesheet" href="..//public/css/style.css">
 </head>
 <body>
     <div class="container">
