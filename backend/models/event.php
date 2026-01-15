@@ -24,7 +24,7 @@ class Event {
         $sql = "SELECT e.*, u.nom as responsable_nom, u.email as responsable_email
                 FROM events e 
                 LEFT JOIN users u ON e.responsable_id = u.id 
-                WHERE e.id = $1";
+                WHERE e.id = ?";
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
@@ -33,8 +33,10 @@ class Event {
     
     // Cree un nouvel evenement
     public function create($data) {
+        error_log("Event::create() appelé avec: " . print_r($data, true));
+        
         $sql = "INSERT INTO events (nom, type_event, date_debut, date_fin, lieu, description, responsable_id, statut) 
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
@@ -49,15 +51,16 @@ class Event {
         ]);
         
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("Event créé avec ID: " . ($result['id'] ?? 'NULL'));
         return $result['id'];
     }
     
     // Met a jour un evenement
     public function update($id, $data) {
         $sql = "UPDATE events 
-                SET nom = $1, type_event = $2, date_debut = $3, date_fin = $4, 
-                    lieu = $5, description = $6, responsable_id = $7, statut = $8 
-                WHERE id = $9";
+                SET nom = ?, type_event = ?, date_debut = ?, date_fin = ?, 
+                    lieu = ?, description = ?, responsable_id = ?, statut = ? 
+                WHERE id = ?";
         
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
@@ -75,7 +78,7 @@ class Event {
     
     // Supprime un evenement
     public function delete($id) {
-        $sql = "DELETE FROM events WHERE id = $1";
+        $sql = "DELETE FROM events WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
     }
@@ -85,7 +88,7 @@ class Event {
         $sql = "SELECT e.*, u.nom as responsable_nom 
                 FROM events e 
                 LEFT JOIN users u ON e.responsable_id = u.id 
-                WHERE e.statut = $1
+                WHERE e.statut = ?
                 ORDER BY e.date_debut DESC";
         
         $stmt = $this->pdo->prepare($sql);

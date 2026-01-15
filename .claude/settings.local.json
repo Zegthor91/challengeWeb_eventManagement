@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ren:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)",
+      "Bash(git add:*)",
+      "Bash(php -r:*)",
+      "Bash(for:*)",
+      "Bash(do if ! grep -q \"carte\\\\.php\\\\|Carte\" \"$file\")",
+      "Bash(then echo \"$file\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(git ls-tree:*)",
+      "Bash(git restore:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}

@@ -1,5 +1,4 @@
 <?php
-// Formulaire d'ajout d'evenement
 require_once '../../config/database.php';
 require_once '../../config/session.php';
 require_once '../../config/helpers.php';
@@ -11,42 +10,47 @@ $user = getCurrentUser();
 $message = '';
 $error = '';
 
-// Recupere la liste des utilisateurs pour le responsable
 $users = fetchAll("SELECT id, nom, role FROM users WHERE role IN ('administrateur', 'chef_projet')");
 
-// Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller = new EventController($pdo);
+    // DEBUG
+    error_log("POST Events: " . print_r($_POST, true));
     
-    $data = [
-        'nom' => clean($_POST['nom']),
-        'type_event' => clean($_POST['type_event']),
-        'date_debut' => $_POST['date_debut'],
-        'date_fin' => $_POST['date_fin'] ?? null,
-        'lieu' => clean($_POST['lieu']),
-        'description' => clean($_POST['description']),
-        'responsable_id' => $_POST['responsable_id'] ?? null,
-        'statut' => $_POST['statut'] ?? 'en_preparation'
-    ];
-    
-    $result = $controller->store($data);
-    
-    if ($result['success']) {
-        $message = $result['message'];
-        header("refresh:2;url=liste.php");
+    // Validation
+    if (empty($_POST['nom'])) {
+        $error = "Le nom de l'événement est obligatoire";
+    } elseif (empty($_POST['date_debut'])) {
+        $error = "La date de début est obligatoire";
     } else {
-        $error = $result['message'];
+        $controller = new EventController($pdo);
+        
+        $data = [
+            'nom' => clean($_POST['nom']),
+            'type_event' => clean($_POST['type_event'] ?? ''),
+            'date_debut' => $_POST['date_debut'],
+            'date_fin' => $_POST['date_fin'] ?? null,
+            'lieu' => clean($_POST['lieu'] ?? ''),
+            'description' => clean($_POST['description'] ?? ''),
+            'responsable_id' => $_POST['responsable_id'] ?? null,
+            'statut' => $_POST['statut'] ?? 'en_preparation'
+        ];
+        
+        $result = $controller->store($data);
+        
+        if ($result['success']) {
+            redirect('liste.php');
+        } else {
+            $error = $result['message'];
+        }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un événement</title>
-    <link rel="stylesheet" href="..//public/css/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
     <div class="container">
@@ -55,14 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li><a href="../dashboard.php">Dashboard</a></li>
                 <li><a href="liste.php" class="active">Événements</a></li>
+                <li><a href="../carte.php">Carte</a></li>
                 <li><a href="../budget/liste.php">Budget</a></li>
                 <li><a href="../personnel/liste.php">Personnel</a></li>
                 <li><a href="../prestataires/liste.php">Prestataires</a></li>
                 <li><a href="../tasks/liste.php">Tâches</a></li>
             </ul>
             <div class="user-info">
-                <p><strong><?php echo $user['nom']; ?></strong></p>
-                <p><?php echo $user['role']; ?></p>
+                <p><strong><?php echo htmlspecialchars($user['nom']); ?></strong></p>
+                <p><?php echo htmlspecialchars($user['role']); ?></p>
                 <a href="../logout.php">Déconnexion</a>
             </div>
         </nav>
@@ -74,11 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <?php if ($message): ?>
-                <div class="success-message"><?php echo $message; ?></div>
+                <div class="success-message"><?php echo htmlspecialchars($message); ?></div>
             <?php endif; ?>
             
             <?php if ($error): ?>
-                <div class="error-message"><?php echo $error; ?></div>
+                <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
             
             <div class="section">
@@ -86,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nom de l'événement *</label>
-                            <input type="text" name="nom" required>
+                            <input type="text" name="nom" placeholder="Ex: Séminaire 2026" required>
                         </div>
                         
                         <div class="form-group">
@@ -132,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <select name="responsable_id">
                                 <option value="">Non assigné</option>
                                 <?php foreach ($users as $u): ?>
-                                    <option value="<?php echo $u['id']; ?>"><?php echo $u['nom']; ?> (<?php echo $u['role']; ?>)</option>
+                                    <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nom']); ?> (<?php echo htmlspecialchars($u['role']); ?>)</option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

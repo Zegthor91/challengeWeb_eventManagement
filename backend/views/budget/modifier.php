@@ -18,7 +18,7 @@ if (!$event_id) {
     redirect('liste.php');
 }
 
-$event = fetchOne("SELECT * FROM events WHERE id = $1", [$event_id]);
+$event = fetchOne("SELECT * FROM events WHERE id = ?", [$event_id]);
 
 if (!$event) {
     redirect('liste.php');
@@ -95,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li><a href="../dashboard.php">Dashboard</a></li>
                 <li><a href="../events/liste.php">Événements</a></li>
+                <li><a href="../carte.php">Carte</a></li>
                 <li><a href="liste.php" class="active">Budget</a></li>
                 <li><a href="../personnel/liste.php">Personnel</a></li>
                 <li><a href="../prestataires/liste.php">Prestataires</a></li>
@@ -218,4 +219,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
-

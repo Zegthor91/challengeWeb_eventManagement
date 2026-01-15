@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier l'événement</title>
-    <link rel="stylesheet" href="..//public/css/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
     <div class="container">
@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li><a href="../dashboard.php">Dashboard</a></li>
                 <li><a href="liste.php" class="active">Événements</a></li>
+                <li><a href="../carte.php">Carte</a></li>
                 <li><a href="../budget/liste.php">Budget</a></li>
                 <li><a href="../personnel/liste.php">Personnel</a></li>
                 <li><a href="../prestataires/liste.php">Prestataires</a></li>

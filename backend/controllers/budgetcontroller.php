@@ -16,10 +16,19 @@ class BudgetController {
     
     // Cree un budget pour un evenement
     public function createBudget($event_id, $budget_total) {
+        // DEBUG
+        error_log("BudgetController::createBudget() appelé avec event_id=$event_id, budget_total=$budget_total");
+        
+        // Validation
+        if (empty($budget_total) || !is_numeric($budget_total)) {
+            return ['success' => false, 'message' => 'Budget total invalide'];
+        }
+        
         try {
             $id = $this->budgetModel->create($event_id, $budget_total);
             return ['success' => true, 'message' => 'Budget créé', 'id' => $id];
         } catch (Exception $e) {
+            error_log("Erreur création budget: " . $e->getMessage());
             return ['success' => false, 'message' => 'Erreur : ' . $e->getMessage()];
         }
     }
