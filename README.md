@@ -36,7 +36,7 @@ Ou via pgAdmin: clic droit sur Databases > Create > Database > `gestion_events`,
 Éditer `backend/config/database.php` :
 ```php
 $host = 'localhost';
-$dbname = 'gestion_events';
+$dbname = 'gestion_evenements';
 $username = 'postgres';
 $password = 'ton_mdp';
 ```
